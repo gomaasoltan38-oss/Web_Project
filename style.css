@@ -1372,3 +1372,73 @@ textarea:valid:not(:placeholder-shown) {
     }
 }
 
+
+/* ====== إصلاح ترتيب الأزرار على الموبايل ====== */
+@media (max-width: 768px) {
+    /* إعادة ترتيب عناصر الهيدر على الموبايل */
+    .nav-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        position: relative;
+    }
+    
+    /* اللوجو في اليمين */
+    .logo {
+        order: 0;
+        margin-left: auto;
+        margin-right: 0;
+    }
+    
+    /* أزرار التحكم (اللغة + الوضع الليلي) في اليسار */
+    .header-controls {
+        order: 1;
+        position: absolute;
+        left: 60px; /* بعد زر القائمة */
+        display: flex !important;
+        gap: 0.3rem;
+        margin: 0 !important;
+    }
+    
+    /* زر القائمة (hamburger) في أقصى اليسار */
+    .nav-toggle {
+        order: 2;
+        position: absolute;
+        left: 10px;
+    }
+    
+    .nav-checkbox {
+        order: 2;
+    }
+    
+    /* القائمة نفسها تاخد السطر الكامل */
+    .main-nav {
+        order: 3;
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+    
+    /* تصغير حجم الأزرار شوية على الموبايل */
+    .header-controls .control-btn {
+        padding: 0.3rem 0.7rem;
+        font-size: 0.8rem;
+    }
+    
+    .dark-mode-btn {
+        padding: 0.3rem 0.6rem !important;
+        font-size: 1rem;
+    }
+}
+
+/* للشاشات الصغيرة جداً */
+@media (max-width: 480px) {
+    .header-controls {
+        left: 50px !important; /* مسافة أقل */
+    }
+    
+    .header-controls .control-btn {
+        padding: 0.25rem 0.6rem;
+        font-size: 0.75rem;
+    }
+}
+
