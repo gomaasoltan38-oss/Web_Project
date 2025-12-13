@@ -885,7 +885,7 @@ function toggleDarkMode() {
     applyDarkMode(darkMode);
 }
 
-// تطبيق الوضع الليلي (ا إطار أخضر + نص أخضر)
+// تطبيق الوضع الليلي (النسخة النهائية: إطار أخضر + نص أخضر)
 function applyDarkMode(isDark) {
     const existingDarkStyle = document.getElementById('dark-mode-styles');
     if (existingDarkStyle) existingDarkStyle.remove();
@@ -959,22 +959,6 @@ function applyDarkMode(isDark) {
     
     document.head.appendChild(styleTag);
 }
-
-// رسائل التنبيه حسب اللغة
-function showAlert(messageKey) {
-    const messages = {
-        ar: {
-            'form-empty': 'من فضلك املأ جميع الحقول',
-            'form-success': 'تم إرسال رسالتك بنجاح'
-        },
-        en: {
-            'form-empty': 'Please fill in all fields',
-            'form-success': 'Your message has been sent successfully'
-        }
-    };
-    return messages[currentLang][messageKey];
-}
-
 // تصدير الدوال للاستخدام في الملفات الأخرى
 window.toggleLanguage = toggleLanguage;
 window.toggleDarkMode = toggleDarkMode;
@@ -1003,4 +987,3 @@ window.addEventListener('resize', function() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(ensureControlsVisible, 250);
 });
-
