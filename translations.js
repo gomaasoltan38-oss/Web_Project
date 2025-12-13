@@ -952,3 +952,24 @@ window.applyLanguage = applyLanguage;
 window.applyDarkMode = applyDarkMode;
 window.currentLang = currentLang;
 window.darkMode = darkMode;
+
+// إصلاح ظهور الأزرار على الموبايل
+function ensureControlsVisible() {
+    const controls = document.querySelector('.header-controls');
+    if (controls) {
+        controls.style.display = 'flex';
+        controls.style.visibility = 'visible';
+        controls.style.opacity = '1';
+    }
+}
+
+// تشغيل عند تحميل الصفحة
+window.addEventListener('DOMContentLoaded', ensureControlsVisible);
+window.addEventListener('load', ensureControlsVisible);
+
+// تشغيل عند تغيير حجم الشاشة
+let resizeTimer;
+window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(ensureControlsVisible, 250);
+});
