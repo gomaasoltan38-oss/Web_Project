@@ -885,7 +885,7 @@ function toggleDarkMode() {
     applyDarkMode(darkMode);
 }
 
-// تطبيق الوضع الليلي
+// تطبيق الوضع الليلي (ا إطار أخضر + نص أخضر)
 function applyDarkMode(isDark) {
     const existingDarkStyle = document.getElementById('dark-mode-styles');
     if (existingDarkStyle) existingDarkStyle.remove();
@@ -901,32 +901,55 @@ function applyDarkMode(isDark) {
         body { background-color: #1a1a2e; color: #e5e5e5; }
         .main-header { background-color: rgba(22, 27, 34, 0.96); border-bottom-color: rgba(255, 255, 255, 0.1); }
         .logo-title { color: #22b273; }
-        .logo-subtitle { color: #aaa; }
+        .logo-subtitle { color: #c5c5c5; }
+        
         .main-nav a { color: #e5e5e5; }
         .main-nav a:hover { background-color: #22b273; }
+        
         .hero-text h1, .section-title, .landmark-content h3, .landmark-detail-header h1,
         .landmark-detail-section h2, .info-box h3, .contact-info h3 { color: #f0f0f0; }
+        
         .hero-text p, .section-text, .section-description, .landmark-content p,
-        .landmark-detail-section p, .info-box ul, .contact-list { color: #b5b5b5; }
+        .landmark-detail-section p, .info-box ul, .contact-list { color: #e0e0e0; }
+        
         .stat-card, .landmark-card, .gallery-item, .landmark-detail-section,
         .info-box, .contact-info, .contact-form { background-color: #16213e; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); }
         .about-section, .landmarks-section, .landmarks, .map-section { background-color: #0f1419; }
+        
         .stat-number { color: #22b273; }
-        .stat-label { color: #999; }
+        .stat-label { color: #c5c5c5; }
         .landmark-city { background-color: rgba(34, 178, 115, 0.2); color: #22b273; }
         .landmark-link { color: #22b273; }
         .landmark-link:hover { background-color: #22b273; color: #fff; }
-        .breadcrumb { color: #aaa; }
+        .breadcrumb { color: #c5c5c5; }
         .breadcrumb a { color: #22b273; }
         .breadcrumb a:hover { color: #2dd98b; }
-        .landmark-detail-location { color: #999; }
+        .landmark-detail-location { color: #c5c5c5; }
         input, textarea { background-color: #0f1419; border-color: #2a2a3e; color: #e5e5e5; }
         input:focus, textarea:focus { border-color: #22b273; box-shadow: 0 0 0 3px rgba(34, 178, 115, 0.3); }
-        label { color: #d0d0d0; }
+        label { color: #e0e0e0; }
         .main-footer { background-color: #0a0e14; }
         .gallery, .contact { background-color: #0f1419; }
+        
         .btn { background: linear-gradient(135deg, #1b8a5a, #22b273); }
         .btn:hover { box-shadow: 0 0 20px rgba(34, 178, 115, 0.8); }
+
+        /* === التعديل هنا: إطار أخضر ونص أخضر === */
+        .btn-outline { 
+            background: transparent !important;   
+            border: 2px solid #1b8a5a !important; /* إطار أخضر غامق */
+            color: #1b8a5a !important;            /* نص أخضر غامق */
+            box-shadow: none !important;
+            font-weight: bold !important;
+        }
+        
+        /* عند اللمس: تعبئة خضراء ونص أبيض */
+        .btn-outline:hover { 
+            background-color: #1b8a5a !important; 
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(27, 138, 90, 0.4) !important;
+        }
+
         .control-btn { background-color: #22b273 !important; }
         .control-btn:hover { background-color: #2dd98b !important; }
         @media (max-width: 768px) {
@@ -980,3 +1003,4 @@ window.addEventListener('resize', function() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(ensureControlsVisible, 250);
 });
+
