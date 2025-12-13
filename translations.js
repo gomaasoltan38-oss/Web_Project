@@ -719,7 +719,9 @@ document.addEventListener('DOMContentLoaded', function() {
     createControlButtons();
 });
 
-// إنشاء أزرار التحكم
+// ====== تعديل دالة createControlButtons في ملف translations.js ======
+// ابحث عن دالة createControlButtons واستبدلها بالكود ده:
+
 function createControlButtons() {
     const navContainer = document.querySelector('.nav-container');
     if (!navContainer) return;
@@ -729,19 +731,16 @@ function createControlButtons() {
     
     const controlsDiv = document.createElement('div');
     controlsDiv.className = 'header-controls';
-    controlsDiv.style.cssText = 'display: flex; align-items: center; gap: 0.5rem; margin-left: auto; margin-right: 1rem;';
     
     const langButton = document.createElement('button');
     langButton.className = 'control-btn lang-btn';
     langButton.setAttribute('data-translate', 'btn-language');
     langButton.innerHTML = currentLang === 'ar' ? 'English' : 'العربية';
-    langButton.style.cssText = 'padding: 0.4rem 0.9rem; border: none; border-radius: 999px; background: #1b8a5a; color: #fff; cursor: pointer; font-size: 0.85rem; transition: all 0.3s ease; font-family: inherit;';
     
     const darkModeButton = document.createElement('button');
     darkModeButton.className = 'control-btn dark-mode-btn';
     darkModeButton.innerHTML = darkMode ? '☀️' : '🌙';
     darkModeButton.setAttribute('title', currentLang === 'ar' ? 'تبديل الوضع الليلي' : 'Toggle Dark Mode');
-    darkModeButton.style.cssText = 'padding: 0.4rem 0.8rem; border: none; border-radius: 999px; background: #1b8a5a; color: #fff; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease;';
     
     // تأثيرات hover للأزرار
     langButton.addEventListener('mouseenter', function() {
@@ -773,11 +772,19 @@ function createControlButtons() {
     controlsDiv.appendChild(langButton);
     controlsDiv.appendChild(darkModeButton);
     
-    const mainNav = navContainer.querySelector('.main-nav');
-    if (mainNav) {
-        navContainer.insertBefore(controlsDiv, mainNav);
+    // ★★★ التعديل المهم: إضافة الأزرار في المكان الصحيح ★★★
+    // نضيف الأزرار قبل زر القائمة (nav-toggle) مباشرة
+    const navToggle = navContainer.querySelector('.nav-toggle');
+    if (navToggle) {
+        navContainer.insertBefore(controlsDiv, navToggle);
     } else {
-        navContainer.appendChild(controlsDiv);
+        // إذا لم يوجد nav-toggle، نضيفها قبل القائمة
+        const mainNav = navContainer.querySelector('.main-nav');
+        if (mainNav) {
+            navContainer.insertBefore(controlsDiv, mainNav);
+        } else {
+            navContainer.appendChild(controlsDiv);
+        }
     }
 }
 
