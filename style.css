@@ -1413,61 +1413,61 @@ textarea:valid:not(:placeholder-shown) {
 /* ====== تنسيقات الموبايل ====== */
 /* ====== تنسيقات الموبايل النهائية (انسخ هذا بدلاً من الكود القديم في نهاية الملف) ====== */
 
-/* ====== كود إصلاح الموبايل النهائي (استبدل الكود السابق بهذا) ====== */
-
 @media (max-width: 768px) {
-    /* 1. ضبط الحاوية لتوزيع العناصر */
     .nav-container {
         display: flex !important;
-        flex-wrap: wrap !important;
+        flex-wrap: wrap !important; /* يسمح للقائمة بالنزول للأسفل عند الفتح */
+        justify-content: space-between !important; /* يوزع العناصر على الأطراف */
         align-items: center !important;
-        justify-content: space-between !important; /* توزيع العناصر على الأطراف */
         padding: 10px 15px !important;
     }
-
-    /* 2. الشعار: في اليمين (رقم 1) */
+    
+    /* 1. الشعار (أقصى اليمين) */
     .logo {
         order: 1 !important;
-        flex: 0 0 auto !important; /* يمنع الشعار من الانكماش */
-        margin-left: 10px !important; /* مسافة صغيرة تفصله عن الأزرار */
+        margin-left: auto !important; /* هذه هي الخدعة: تدفع كل العناصر الأخرى لأقصى اليسار */
+        flex-shrink: 0;
     }
 
-    /* 3. أزرار التحكم: بجانب الشعار مباشرة (رقم 2) */
+    /* 2. تجميع أزرار التحكم والقائمة في اليسار */
+    /* سنقوم بجمعهم بصرياً بجانب بعض */
+    
     .header-controls {
         order: 2 !important;
-        flex: 0 0 auto !important;
-        margin-right: 0 !important;
-        margin-left: auto !important; /* هذا السطر هو السر: يدفع كل ما بعده لأقصى اليسار */
+        margin: 0 !important;
+        margin-left: 10px !important; /* مسافة صغيرة بين الأزرار والقائمة */
     }
-
-    /* 4. زر القائمة: في أقصى اليسار (رقم 3) */
+    
+    /* 3. زر الثلاث شرط (أقصى اليسار) */
     .nav-toggle {
         order: 3 !important;
-        display: flex !important;
-        flex-direction: column;
-        justify-content: center;
-        gap: 5px; /* مسافة بين الشرط */
+        display: flex !important; /* لضمان ظهورها */
         margin: 0 !important;
     }
-
-    /* 5. هام جدًا: تغيير لون الشرط للأبيض لتظهر في الخلفية الغامقة */
-    .nav-toggle span {
-        background-color: #ffffff !important; /* لون أبيض */
-        display: block !important;
-        height: 3px !important;
-        width: 28px !important;
-        margin: 0 !important;
-        position: relative !important;
-        top: auto !important; /* إلغاء التموضع القديم */
-    }
-
-    /* 6. القائمة المنسدلة: تنزل سطر جديد */
+    
+    /* 4. القائمة المنسدلة (تأخذ سطر جديد بالكامل) */
     .main-nav {
         order: 4 !important;
         width: 100% !important;
-        margin-top: 15px !important;
+        flex-basis: 100% !important;
+        margin-top: 10px;
+    }
+
+    /* تعديل حجم الصور والخطوط للموبايل */
+    .logo-img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .logo-title {
+        font-size: 1rem;
+    }
+    
+    .logo-subtitle {
+        font-size: 0.7rem;
     }
 }
+
 /* شاشات أصغر */
 @media (max-width: 480px) {
     .nav-container {
@@ -1532,5 +1532,3 @@ textarea:valid:not(:placeholder-shown) {
 .dark-mode .control-btn:hover {
     background-color: #2dd98b !important;
 }
-
-
