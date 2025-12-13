@@ -1411,76 +1411,62 @@ textarea:valid:not(:placeholder-shown) {
 }
 
 /* ====== تنسيقات الموبايل ====== */
+/* ====== تنسيقات الموبايل النهائية (انسخ هذا بدلاً من الكود القديم في نهاية الملف) ====== */
+
 @media (max-width: 768px) {
     .nav-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.75rem;
-        gap: 0.5rem;
+        display: flex !important;
+        flex-wrap: wrap !important; /* يسمح للقائمة بالنزول للأسفل عند الفتح */
+        justify-content: space-between !important; /* يوزع العناصر على الأطراف */
+        align-items: center !important;
+        padding: 10px 15px !important;
     }
     
-    /* ترتيب العناصر */
+    /* 1. الشعار (أقصى اليمين) */
     .logo {
-        order: 1; /* اللوجو أولاً (يسار) */
-        flex: 0 0 auto;
+        order: 1 !important;
+        margin-left: auto !important; /* هذه هي الخدعة: تدفع كل العناصر الأخرى لأقصى اليسار */
+        flex-shrink: 0;
     }
+
+    /* 2. تجميع أزرار التحكم والقائمة في اليسار */
+    /* سنقوم بجمعهم بصرياً بجانب بعض */
     
     .header-controls {
-        order: 2; /* الأزرار ثانياً (وسط) */
-        flex: 0 0 auto;
-        margin-left: auto; /* يدفع الأزرار لليمين */
-        margin-right: 0.5rem;
+        order: 2 !important;
+        margin: 0 !important;
+        margin-left: 10px !important; /* مسافة صغيرة بين الأزرار والقائمة */
     }
     
-    .nav-checkbox {
-        order: 3; /* checkbox القائمة */
-    }
-    
+    /* 3. زر الثلاث شرط (أقصى اليسار) */
     .nav-toggle {
-        order: 3; /* زر القائمة ثالثاً (يمين) */
-        display: block;
-        flex: 0 0 auto;
-        margin: 0;
+        order: 3 !important;
+        display: flex !important; /* لضمان ظهورها */
+        margin: 0 !important;
     }
     
+    /* 4. القائمة المنسدلة (تأخذ سطر جديد بالكامل) */
     .main-nav {
-        order: 4; /* القائمة رابعاً (سطر جديد) */
-        width: 100%;
-        flex-basis: 100%;
+        order: 4 !important;
+        width: 100% !important;
+        flex-basis: 100% !important;
+        margin-top: 10px;
     }
-    
-    /* تصغير الأزرار */
-    .control-btn {
-        padding: 0.35rem 0.75rem !important;
-        font-size: 0.8rem !important;
-    }
-    
-    .dark-mode-btn {
-        padding: 0.35rem 0.7rem !important;
-        font-size: 1rem !important;
-    }
-    
-    .header-controls {
-        gap: 0.4rem;
-    }
-    
-    /* تصغير اللوجو */
+
+    /* تعديل حجم الصور والخطوط للموبايل */
     .logo-img {
         width: 35px;
         height: 35px;
     }
     
     .logo-title {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .logo-subtitle {
         font-size: 0.7rem;
     }
 }
-
 /* شاشات أصغر */
 @media (max-width: 480px) {
     .nav-container {
@@ -1545,3 +1531,4 @@ textarea:valid:not(:placeholder-shown) {
 .dark-mode .control-btn:hover {
     background-color: #2dd98b !important;
 }
+
