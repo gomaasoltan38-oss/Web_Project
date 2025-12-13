@@ -1372,3 +1372,63 @@ textarea:valid:not(:placeholder-shown) {
     }
 }
 
+
+/* ====== تحسين تنسيق أزرار التحكم في الموبايل ====== */
+@media (max-width: 768px) {
+    .header-controls {
+        order: 1;
+        margin: 0 !important;
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1001;
+        gap: 0.3rem;
+    }
+
+    .nav-container {
+        position: relative;
+        padding-inline: 3.5rem;
+    }
+
+    .logo {
+        order: 2;
+        margin-inline: auto;
+    }
+
+    .nav-toggle {
+        order: 3;
+        margin-right: 0;
+    }
+
+    /* تبديل اتجاه الأزرار لتكون: [🌙] [English] */
+    .header-controls {
+        flex-direction: row;
+    }
+
+    .dark-mode-btn {
+        order: 1;
+    }
+
+    .lang-btn {
+        order: 2;
+    }
+}
+
+/* تنسيق إضافي للشاشات الصغيرة جداً */
+@media (max-width: 480px) {
+    .header-controls {
+        left: 0.5rem;
+        gap: 0.2rem;
+    }
+
+    .control-btn {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.8rem;
+    }
+
+    .dark-mode-btn {
+        padding: 0.35rem 0.6rem;
+        font-size: 1rem;
+    }
+}
