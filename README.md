@@ -92,6 +92,8 @@
 
 ###### &nbsp;  ├── style.css
 
+###### &nbsp;  ├── translations.js
+
 ###### &nbsp;  ├── script.js
 
 ###### &nbsp;  ├── dirbishwy.html
