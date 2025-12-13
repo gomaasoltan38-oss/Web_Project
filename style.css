@@ -1,3 +1,4 @@
+
 /* ====== إعدادات عامة ====== */
 *,
 *::before,
@@ -1369,12 +1370,48 @@ textarea:valid:not(:placeholder-shown) {
     }
 }
 
-/* ====== إصلاح ترتيب الموبايل - الشعار يسار والأزرار يمين ====== */
 
-/* احذف أي كود قديم للموبايل وحط ده في آخر ملف style.css */
+/* ====== CSS النهائي - ضعه في آخر ملف style.css ====== */
 
+/* حذف أي CSS قديم للـ header-controls والـ nav-container على الموبايل */
+/* ثم أضف هذا الكود: */
+
+/* تنسيقات أزرار التحكم - لكل الشاشات */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control-btn {
+    padding: 0.4rem 0.9rem;
+    border: none;
+    border-radius: 999px;
+    background: #1b8a5a;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.control-btn:hover {
+    background: #22b273;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(27, 138, 90, 0.4);
+}
+
+.dark-mode-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 1.1rem;
+}
+
+.dark-mode-btn:hover {
+    transform: translateY(-2px) rotate(20deg);
+}
+
+/* ====== تنسيقات الموبايل ====== */
 @media (max-width: 768px) {
-    /* إعادة هيكلة الـ nav-container */
     .nav-container {
         display: flex;
         flex-wrap: wrap;
@@ -1384,41 +1421,37 @@ textarea:valid:not(:placeholder-shown) {
         gap: 0.5rem;
     }
     
-    /* اللوجو - أقصى اليسار */
+    /* ترتيب العناصر */
     .logo {
-        order: 1;
-        margin: 0;
+        order: 1; /* اللوجو أولاً (يسار) */
+        flex: 0 0 auto;
     }
     
-    /* أزرار التحكم - في اليمين */
     .header-controls {
-        order: 2;
-        display: flex !important;
-        gap: 0.4rem;
-        margin: 0 !important;
-    }
-    
-    /* زر القائمة (hamburger) - أقصى اليمين */
-    .nav-toggle {
-        order: 3;
-        display: block;
-        margin: 0;
-        margin-right: 0;
+        order: 2; /* الأزرار ثانياً (وسط) */
+        flex: 0 0 auto;
+        margin-left: auto; /* يدفع الأزرار لليمين */
+        margin-right: 0.5rem;
     }
     
     .nav-checkbox {
-        order: 3;
+        order: 3; /* checkbox القائمة */
     }
     
-    /* القائمة - السطر الثاني (كامل العرض) */
+    .nav-toggle {
+        order: 3; /* زر القائمة ثالثاً (يمين) */
+        display: block;
+        flex: 0 0 auto;
+        margin: 0;
+    }
+    
     .main-nav {
-        order: 4;
+        order: 4; /* القائمة رابعاً (سطر جديد) */
         width: 100%;
-        position: relative;
-        top: 0;
+        flex-basis: 100%;
     }
     
-    /* تصغير حجم الأزرار قليلاً */
+    /* تصغير الأزرار */
     .control-btn {
         padding: 0.35rem 0.75rem !important;
         font-size: 0.8rem !important;
@@ -1429,7 +1462,11 @@ textarea:valid:not(:placeholder-shown) {
         font-size: 1rem !important;
     }
     
-    /* تصغير اللوجو قليلاً */
+    .header-controls {
+        gap: 0.4rem;
+    }
+    
+    /* تصغير اللوجو */
     .logo-img {
         width: 35px;
         height: 35px;
@@ -1444,7 +1481,7 @@ textarea:valid:not(:placeholder-shown) {
     }
 }
 
-/* للشاشات الأصغر من 480px */
+/* شاشات أصغر */
 @media (max-width: 480px) {
     .nav-container {
         padding: 0.6rem;
@@ -1452,17 +1489,18 @@ textarea:valid:not(:placeholder-shown) {
     }
     
     .control-btn {
-        padding: 0.3rem 0.65rem !important;
+        padding: 0.3rem 0.6rem !important;
         font-size: 0.75rem !important;
     }
     
     .dark-mode-btn {
-        padding: 0.3rem 0.6rem !important;
+        padding: 0.3rem 0.55rem !important;
         font-size: 0.95rem !important;
     }
     
     .header-controls {
         gap: 0.3rem;
+        margin-right: 0.3rem;
     }
     
     .logo-img {
@@ -1479,10 +1517,11 @@ textarea:valid:not(:placeholder-shown) {
     }
 }
 
-/* في حالة اللغة الإنجليزية - نعكس الترتيب */
+/* اللغة الإنجليزية */
 @media (max-width: 768px) {
-    [dir="ltr"] .nav-container {
-        flex-direction: row-reverse;
+    [dir="ltr"] .header-controls {
+        margin-left: 0.5rem;
+        margin-right: auto !important;
     }
     
     [dir="ltr"] .logo {
@@ -1496,27 +1535,13 @@ textarea:valid:not(:placeholder-shown) {
     [dir="ltr"] .nav-toggle {
         order: 3;
     }
-    
-    [dir="ltr"] .main-nav {
-        order: 4;
-    }
 }
 
-/* تأكيد ظهور الأزرار */
-.header-controls {
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: flex !important;
+/* Dark Mode للأزرار */
+.dark-mode .control-btn {
+    background-color: #22b273 !important;
 }
 
-.control-btn {
-    display: inline-block !important;
-    cursor: pointer !important;
-}
-
-/* حل مشكلة اختفاء الأزرار */
-@media (max-width: 768px) {
-    .nav-container > * {
-        flex-shrink: 0;
-    }
+.dark-mode .control-btn:hover {
+    background-color: #2dd98b !important;
 }
