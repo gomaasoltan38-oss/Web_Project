@@ -1370,74 +1370,67 @@ textarea:valid:not(:placeholder-shown) {
     }
 }
 
-/* ====== إصلاح كامل لترتيب الأزرار على الموبايل ====== */
+/* ====== إصلاح ترتيب الموبايل - الشعار يسار والأزرار يمين ====== */
 
-/* حذف الكود القديم وإضافة هذا الكود في نهاية ملف style.css */
+/* احذف أي كود قديم للموبايل وحط ده في آخر ملف style.css */
 
 @media (max-width: 768px) {
     /* إعادة هيكلة الـ nav-container */
     .nav-container {
-        display: grid;
-        grid-template-columns: auto 1fr auto auto;
-        grid-template-rows: auto auto;
-        gap: 0.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
         align-items: center;
         padding: 0.75rem;
+        gap: 0.5rem;
     }
     
-    /* زر القائمة (hamburger) - أقصى اليسار */
-    .nav-checkbox {
-        grid-column: 1;
-        grid-row: 1;
-    }
-    
-    .nav-toggle {
-        grid-column: 1;
-        grid-row: 1;
-        display: block;
+    /* اللوجو - أقصى اليسار */
+    .logo {
+        order: 1;
         margin: 0;
     }
     
-    /* أزرار التحكم (اللغة + الوضع الليلي) - بعد الهامبرجر */
+    /* أزرار التحكم - في اليمين */
     .header-controls {
-        grid-column: 2;
-        grid-row: 1;
+        order: 2;
         display: flex !important;
         gap: 0.4rem;
         margin: 0 !important;
-        justify-self: start;
-        margin-right: 0.5rem !important;
     }
     
-    /* اللوجو - أقصى اليمين */
-    .logo {
-        grid-column: 4;
-        grid-row: 1;
-        justify-self: end;
+    /* زر القائمة (hamburger) - أقصى اليمين */
+    .nav-toggle {
+        order: 3;
+        display: block;
         margin: 0;
+        margin-right: 0;
+    }
+    
+    .nav-checkbox {
+        order: 3;
     }
     
     /* القائمة - السطر الثاني (كامل العرض) */
     .main-nav {
-        grid-column: 1 / -1;
-        grid-row: 2;
+        order: 4;
+        width: 100%;
         position: relative;
         top: 0;
-        width: 100%;
     }
     
-    /* تصغير حجم الأزرار */
+    /* تصغير حجم الأزرار قليلاً */
     .control-btn {
-        padding: 0.35rem 0.7rem !important;
+        padding: 0.35rem 0.75rem !important;
         font-size: 0.8rem !important;
     }
     
     .dark-mode-btn {
-        padding: 0.35rem 0.65rem !important;
+        padding: 0.35rem 0.7rem !important;
         font-size: 1rem !important;
     }
     
-    /* تعديل صورة اللوجو */
+    /* تصغير اللوجو قليلاً */
     .logo-img {
         width: 35px;
         height: 35px;
@@ -1452,20 +1445,20 @@ textarea:valid:not(:placeholder-shown) {
     }
 }
 
-/* للشاشات الأصغر */
+/* للشاشات الأصغر من 480px */
 @media (max-width: 480px) {
     .nav-container {
-        grid-template-columns: auto auto 1fr auto;
         padding: 0.6rem;
+        gap: 0.4rem;
     }
     
     .control-btn {
-        padding: 0.3rem 0.6rem !important;
+        padding: 0.3rem 0.65rem !important;
         font-size: 0.75rem !important;
     }
     
     .dark-mode-btn {
-        padding: 0.3rem 0.55rem !important;
+        padding: 0.3rem 0.6rem !important;
         font-size: 0.95rem !important;
     }
     
@@ -1487,35 +1480,30 @@ textarea:valid:not(:placeholder-shown) {
     }
 }
 
-/* في حالة اللغة الإنجليزية */
-[dir="ltr"] .nav-container {
-    direction: rtl; /* نخلي الأزرار من اليمين لليسار */
-}
-
+/* في حالة اللغة الإنجليزية - نعكس الترتيب */
 @media (max-width: 768px) {
     [dir="ltr"] .nav-container {
-        grid-template-columns: auto auto 1fr auto;
-    }
-    
-    [dir="ltr"] .nav-toggle {
-        grid-column: 1;
-        justify-self: start;
-    }
-    
-    [dir="ltr"] .header-controls {
-        grid-column: 2;
-        justify-self: start;
-        margin-left: 0.5rem !important;
-        margin-right: 0 !important;
+        flex-direction: row-reverse;
     }
     
     [dir="ltr"] .logo {
-        grid-column: 4;
-        justify-self: end;
+        order: 1;
+    }
+    
+    [dir="ltr"] .header-controls {
+        order: 2;
+    }
+    
+    [dir="ltr"] .nav-toggle {
+        order: 3;
+    }
+    
+    [dir="ltr"] .main-nav {
+        order: 4;
     }
 }
 
-/* إضافة: تأكد من ظهور الأزرار */
+/* تأكيد ظهور الأزرار */
 .header-controls {
     visibility: visible !important;
     opacity: 1 !important;
@@ -1524,4 +1512,12 @@ textarea:valid:not(:placeholder-shown) {
 
 .control-btn {
     display: inline-block !important;
+    cursor: pointer !important;
+}
+
+/* حل مشكلة اختفاء الأزرار */
+@media (max-width: 768px) {
+    .nav-container > * {
+        flex-shrink: 0;
+    }
 }
