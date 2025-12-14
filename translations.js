@@ -879,7 +879,7 @@ function applyDarkMode(isDark) {
         .main-header { background-color: rgba(22, 27, 34, 0.96); }
         .logo-title { color: #22b273; }
         .logo-subtitle { color: #c5c5c5; }
-        
+        .nav-toggle span { background-color: #ffffff !important; }
         .main-nav a { color: #e5e5e5; }
         .main-nav a:hover { background-color: #22b273; }
         
@@ -964,4 +964,5 @@ let resizeTimer;
 window.addEventListener('resize', function() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(ensureControlsVisible, 250);
+
 });
