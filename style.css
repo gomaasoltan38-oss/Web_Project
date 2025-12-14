@@ -857,8 +857,8 @@ textarea:focus {
 }
 
 [dir="ltr"] .header-controls {
-    margin-left: 0 !important;
-    margin-right: auto !important;
+    margin-right: 3rem !important; 
+    margin-left: auto !important;
 }
 
 [dir="ltr"] .back-to-top {
@@ -1522,3 +1522,4 @@ textarea:valid:not(:placeholder-shown) {
 .dark-mode .control-btn:hover {
     background-color: #2dd98b !important;
 }
+
