@@ -26,7 +26,7 @@ const translations = {
         'about-p3': 'رشيد، المدينة التاريخية الشهيرة، تعد جوهرة التاج في محافظة البحيرة بمنازلها الأثرية الفريدة وحجر رشيد الذي كان مفتاح فك رموز الحضارة المصرية القديمة.',
         
         // --- الإحصائيات ---
-        'stat-landmarks': 'مدن رئيسية',
+        'stat-landmarks': 'مدينة رئيسية',
         'stat-history': 'معلم رئيسي',
         'stat-monasteries': 'موقع جغرافي مميز',
         'stat-location': 'غرب الدلتا',  
@@ -688,3 +688,4 @@ const translations = {
         'page-title-home': 'Beheira Governorate - Landmarks & Tourism',
     }
 };
+
