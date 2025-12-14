@@ -811,59 +811,124 @@ function applyLanguage(lang) {
     applyLanguageStyles(lang);
 }
 
-// دالة إضافة تنسيقات CSS خاصة باللغة (اتجاه النص)
+// دالة لتطبيق تنسيقات CSS ديناميكيًا حسب اللغة المختارة
 function applyLanguageStyles(lang) {
+    
+    // 1. حذف أي تنسيقات سابقة لمنع تداخل الأنماط
     const existingStyle = document.getElementById('lang-styles');
     if (existingStyle) existingStyle.remove();
     
+    // 2. إنشاء عنصر style جديد لإضافة أكواد CSS
     const styleTag = document.createElement('style');
     styleTag.id = 'lang-styles';
     
-  if (lang === 'en') {
+    // 3. حالة اللغة الإنجليزية (English)
+    if (lang === 'en') {
         styleTag.textContent = `
-            body { direction: ltr; text-align: left; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-            .nav-container { flex-direction: row-reverse; }
-            .logo { flex-direction: row-reverse; }
+            /* ضبط اتجاه النصوص من اليسار إلى اليمين */
+            body { 
+                direction: ltr; 
+                text-align: left; 
+                font-family: sans-serif; 
+            }
+
+            /* === تنسيق الشريط العلوي (Header) === */
+            
+            /* إجبار العناصر على الترتيب في صف واحد أفقي */
+            .nav-container { 
+                flex-direction: row !important; 
+            }
+            .logo { 
+                flex-direction: row !important; 
+            }
+
+            /* دفع القائمة إلى أقصى اليمين */
+            .main-nav ul {
+                margin-left: auto !important; 
+                margin-right: 0 !important;
+            }
+            
+            /* ضبط المسافة بين الأزرار والشعار في وضع الكمبيوتر */
+            .header-controls {
+                margin-left: 7rem !important; /* مسافة كبيرة للفصل بينهما */
+                margin-right: 0 !important;
+            }
+
+            /* === تحسينات العناصر الإضافية === */
+            
+            /* ضبط اتجاه شريط المسار (Breadcrumb) */
             .breadcrumb { direction: ltr; justify-content: flex-start; }
-            .landmark-detail-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
-            
-            /* تنسيق الشاشات الكبيرة */
-            .header-controls { margin-left: 0 !important; margin-right: auto !important; }
-            
-            .back-to-top { left: auto !important; right: 30px !important; }
-            .main-nav ul { margin-right: 0; margin-left: auto; }
-            .hero-content { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
-            .contact-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr); }
             .breadcrumb span:not(:last-child)::after { content: '›'; margin: 0 0.3rem; }
-            .breadcrumb span:last-child::after { content: none; }
-            .info-box ul li strong { float: left; margin-right: 0.5rem; }
+            
+            /* ضبط اتجاه سهم رابط التفاصيل */
             .landmark-link::after { content: ' →'; }
             .landmark-link::before { content: none; }
             
-            @media (max-width: 768px) {
-                .landmark-detail-layout { grid-template-columns: 1fr; }
-                .hero-content { grid-template-columns: 1fr; }
-                .contact-grid { grid-template-columns: 1fr; }
-                [dir="ltr"] .header-controls, .header-controls { 
-                    margin-left: auto !important; 
-                    margin-right: 5px !important; 
-                } 
+            /* ضبط تخطيط الشبكة (Grid) للصفحات الداخلية */
+            .landmark-detail-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+            .hero-content { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+            .contact-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr); }
+            .info-box ul li strong { float: left; margin-right: 0.5rem; }
+            
+            /* نقل زر "العودة للأعلى" لجهة اليمين */
+            .back-to-top { left: auto !important; right: 30px !important; }
+
+            /* === تنسيق الشاشات الصغيرة (الموبايل والتابلت) === */
+            @media (max-width: 1024px) {
+                /* عرض محتويات الصفحة بشكل عمودي (تحت بعضها) */
+                .landmark-detail-layout, .hero-content, .contact-grid { 
+                    grid-template-columns: 1fr; 
+                }
                 
+                /* السماح بالتفاف عناصر الشريط العلوي عند ضيق المساحة */
+                .nav-container { flex-wrap: wrap; }
+
+                /* 1. الشعار: يظهر أولاً جهة اليسار */
+                .logo {
+                    order: 1;
+                    margin-right: auto !important;
+                    margin-left: 0 !important;
+                }
+
+                /* 2. أزرار التحكم: تظهر بمسافة صغيرة مناسبة للموبايل */
+                .header-controls {
+                    order: 2;
+                    margin-left: 20px !important; 
+                    margin-right: 10px !important;
+                }
+
+                /* 3. زر القائمة: يظهر أخيرًا جهة اليمين */
+                .nav-toggle {
+                    order: 3;
+                }
             }
         `;
-    }else {
+    } else {
+        // 4. حالة اللغة العربية (الوضع الافتراضي)
         styleTag.textContent = `
-            body { direction: rtl; text-align: right; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
-            .header-controls { margin-left: auto !important; margin-right: 1rem !important; }
+            /* ضبط اتجاه النصوص من اليمين إلى اليسار */
+            body { 
+                direction: rtl; 
+                text-align: right; 
+                font-family: sans-serif; 
+            }
+            
+            /* ضبط المسافة بين الأزرار والشعار في العربي */
+            .header-controls { 
+                margin-left: auto !important; 
+                margin-right: 3.5rem !important; 
+            }
+
+            /* تنسيق فواصل شريط المسار */
             .breadcrumb span:not(:last-child)::after { content: '›'; margin: 0 0.3rem; }
             .landmark-link::before { content: '← '; }
             .landmark-link::after { content: none; }
         `;
     }
     
+    // إضافة عنصر الـ style للصفحة لتفعيل التنسيقات
     document.head.appendChild(styleTag);
 }
-
 // دالة تبديل الوضع الليلي وحفظ الحالة
 function toggleDarkMode() {
     darkMode = !darkMode;
@@ -938,7 +1003,7 @@ function applyDarkMode(isDark) {
 
         .control-btn { background-color: #22b273 !important; }
         .control-btn:hover { background-color: #2dd98b !important; }
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .main-nav { background-color: #16213e; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); }
         }
     `;
