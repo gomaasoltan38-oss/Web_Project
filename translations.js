@@ -819,14 +819,17 @@ function applyLanguageStyles(lang) {
     const styleTag = document.createElement('style');
     styleTag.id = 'lang-styles';
     
-    if (lang === 'en') {
+  if (lang === 'en') {
         styleTag.textContent = `
             body { direction: ltr; text-align: left; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
             .nav-container { flex-direction: row-reverse; }
             .logo { flex-direction: row-reverse; }
             .breadcrumb { direction: ltr; justify-content: flex-start; }
             .landmark-detail-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+            
+            /* تنسيق الشاشات الكبيرة */
             .header-controls { margin-left: 0 !important; margin-right: auto !important; }
+            
             .back-to-top { left: auto !important; right: 30px !important; }
             .main-nav ul { margin-right: 0; margin-left: auto; }
             .hero-content { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
@@ -836,10 +839,16 @@ function applyLanguageStyles(lang) {
             .info-box ul li strong { float: left; margin-right: 0.5rem; }
             .landmark-link::after { content: ' →'; }
             .landmark-link::before { content: none; }
+            
             @media (max-width: 768px) {
                 .landmark-detail-layout { grid-template-columns: 1fr; }
                 .hero-content { grid-template-columns: 1fr; }
                 .contact-grid { grid-template-columns: 1fr; }
+                [dir="ltr"] .header-controls, .header-controls { 
+                    margin-left: auto !important; 
+                    margin-right: 5px !important; 
+                } 
+                
             }
         `;
     } else {
@@ -966,3 +975,4 @@ window.addEventListener('resize', function() {
     resizeTimer = setTimeout(ensureControlsVisible, 250);
 
 });
+
