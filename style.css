@@ -1519,14 +1519,6 @@ textarea:valid:not(:placeholder-shown) {
     background-color: #22b273 !important;
 }
 
-.landmark-card, .gallery-item, .stat-card, img {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-    animation: none !important;
-}
-
 .dark-mode .control-btn:hover {
     background-color: #2dd98b !important;
 }
-
