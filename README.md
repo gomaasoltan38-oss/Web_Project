@@ -124,31 +124,31 @@
 
 ###### &nbsp;      └── 📁 images/
 
-###### &nbsp;                  ├── Behera Logo .gif
+###### &nbsp;          ├── Behera Logo .gif
 
-###### &nbsp;                  ├── logo.jpeg
+###### &nbsp;          ├── logo.jpeg
 
-###### &nbsp;                  ├── dirbishwy.jpg
+###### &nbsp;          ├── dirbishwy.jpg
 
-###### &nbsp;                  ├── lake.jpeg
+###### &nbsp;          ├── lake.jpeg
 
-###### &nbsp;                  ├── mahmoudia.jpeg
+###### &nbsp;          ├── mahmoudia.jpeg
 
-###### &nbsp;                  ├── malekfarouq.jpeg
+###### &nbsp;          ├── malekfarouq.jpeg
 
-###### &nbsp;                  ├── mathaf.jpeg
+###### &nbsp;          ├── mathaf.jpeg
 
-###### &nbsp;                  ├── mosque.jpg
+###### &nbsp;          ├── mosque.jpg
 
-###### &nbsp;                  ├── opera.jpeg
+###### &nbsp;          ├── opera.jpeg
 
-###### &nbsp;                  ├── qaitbay.jpeg
+###### &nbsp;          ├── qaitbay.jpeg
 
-###### &nbsp;                  ├── qanater.jpeg
+###### &nbsp;          ├── qanater.jpeg
 
-###### &nbsp;                  ├── rashidrock.jpg
+###### &nbsp;          ├── rashidrock.jpg
 
-###### &nbsp;                  └── Al-Amsili House.jpg
+###### &nbsp;          └── Al-Amsili House.jpg
 
 2. افتح ملف `index.html` بالنقر المزدوج عليه أو اسحبه إلى المتصفح
 3. استمتع بتصفح الموقع! 🎉
