@@ -1,324 +1,1179 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-translate="logo-title">محافظة البحيرة - معالم وسياحة</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            display: grid;
+            grid-template-columns: 2fr 3fr 1.5fr;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+        
+        .header-box {
+            border: 3px solid #2c3e50;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .header-box h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            letter-spacing: 3px;
+            font-weight: 800;
+        }
+        
+        .month-year {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .month-year div {
+            border: 2px solid #95a5a6;
+            padding: 12px;
+            border-radius: 5px;
+            background: white;
+        }
+        
+        .month-year label {
+            display: block;
+            font-size: 11px;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .month-year input, .month-year select {
+            width: 100%;
+            border: none;
+            font-size: 16px;
+            text-align: center;
+            font-weight: 600;
+            color: #2c3e50;
+            background: transparent;
+        }
+        
+        .daily-progress-box {
+            border: 3px solid #2c3e50;
+            padding: 20px;
+        }
+        
+        .daily-progress-box h2 {
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #7f8c8d;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        
+        .progress-circle {
+            width: 100px;
+            height: 100px;
+            border: 8px solid #3498db;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+        
+        .habits-section {
+            border: 3px solid #2c3e50;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            border-radius: 8px;
+        }
+        
+        .habits-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            text-align: center;
+            font-weight: 800;
+            color: white;
+            font-size: 16px;
+            letter-spacing: 3px;
+        }
+        
+        .weeks-container {
+            display: flex;
+            background: white;
+        }
+        
+        .habits-column {
+            min-width: 250px;
+            border-right: 2px solid #ddd;
+        }
+        
+        .habits-column-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px;
+            text-align: center;
+            font-weight: 800;
+            border-bottom: 2px solid #2c3e50;
+            color: white;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+        
+        .days-label {
+            background: #ecf0f1;
+            padding: 10px;
+            text-align: center;
+            font-size: 13px;
+            border-bottom: 2px solid #bdc3c7;
+            font-weight: 700;
+            color: #34495e;
+        }
+        
+        .habit-input {
+            padding: 10px;
+            border-bottom: 1px solid #ecf0f1;
+            height: 40px;
+            transition: background 0.3s;
+        }
+        
+        .habit-input:hover {
+            background: #f8f9fa;
+        }
+        
+        .habit-input input {
+            width: 100%;
+            border: none;
+            font-size: 14px;
+            padding: 5px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .habit-input input:focus {
+            outline: none;
+            font-weight: 600;
+        }
+        
+        .week-column {
+            flex: 1;
+            min-width: 280px;
+            border-right: 2px solid #ddd;
+        }
+        
+        .week-1 { background: linear-gradient(180deg, #e3f2fd 0%, #bbdefb 100%); }
+        .week-2 { background: linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 100%); }
+        .week-3 { background: linear-gradient(180deg, #fce4ec 0%, #f8bbd0 100%); }
+        .week-4 { background: linear-gradient(180deg, #fff9c4 0%, #fff59d 100%); }
+        
+        .week-header {
+            padding: 12px;
+            text-align: center;
+            font-weight: 800;
+            border-bottom: 2px solid #2c3e50;
+            font-size: 15px;
+            color: #2c3e50;
+            letter-spacing: 2px;
+        }
+        
+        .days-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-size: 11px;
+            border-bottom: 2px solid #bdc3c7;
+            background: rgba(255,255,255,0.7);
+        }
+        
+        .days-row div {
+            padding: 8px 2px;
+            border-right: 1px solid #ddd;
+            font-weight: 700;
+            color: #34495e;
+        }
+        
+        .date-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-size: 12px;
+            border-bottom: 2px solid #bdc3c7;
+            background: rgba(255,255,255,0.5);
+        }
+        
+        .date-row div {
+            padding: 6px 2px;
+            border-right: 1px solid #ddd;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .checkbox-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            height: 40px;
+            border-bottom: 1px solid #ecf0f1;
+            transition: background 0.2s;
+        }
+        
+        .checkbox-row:hover {
+            background: rgba(255,255,255,0.8);
+        }
+        
+        .checkbox-row div {
+            padding: 10px 2px;
+            border-right: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .checkbox-row input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #27ae60;
+        }
+        
+        .progress-column {
+            min-width: 180px;
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .progress-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px;
+            text-align: center;
+            font-weight: 800;
+            border-bottom: 2px solid #2c3e50;
+            color: white;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+        
+        .progress-row {
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+            text-align: center;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .weekly-section {
+            display: grid;
+            grid-template-columns: 1.2fr 4fr 1.5fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .weekly-progress {
+            border: 3px solid #2c3e50;
+            padding: 25px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .weekly-progress h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 16px;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+        
+        .stats {
+            margin-top: 20px;
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 2px solid #dee2e6;
+            font-size: 14px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .stats-row span:last-child {
+            color: #27ae60;
+            font-weight: 800;
+        }
+        
+        .week-circles {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid #2c3e50;
+            padding: 30px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .week-circle {
+            text-align: center;
+        }
+        
+        .circle {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 8px solid;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .circle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .circle-1 { 
+            border-color: #3498db; 
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1565c0;
+        }
+        .circle-2 { 
+            border-color: #2ecc71; 
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: #2e7d32;
+        }
+        .circle-3 { 
+            border-color: #e91e63; 
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            color: #ad1457;
+        }
+        .circle-4 { 
+            border-color: #f39c12; 
+            background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+            color: #f57f17;
+        }
+        .circle-5 { 
+            border-color: #9b59b6; 
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            color: #6a1b9a;
+        }
+        
+        .week-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #34495e;
+            letter-spacing: 1px;
+        }
+        
+        .notes-box {
+            border: 3px solid #2c3e50;
+            padding: 20px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .notes-box h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 16px;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+        
+        .notes-box textarea {
+            width: 100%;
+            height: 180px;
+            border: 2px solid #bdc3c7;
+            padding: 12px;
+            font-size: 14px;
+            resize: vertical;
+            border-radius: 5px;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .notes-box textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 15px 40px;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .btn-print {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+        }
+        
+        .btn-reset {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+                background: white;
+            }
+            .buttons {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .weeks-container {
+                overflow-x: auto;
+            }
+        }
+        
+        .charts-section {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 3px solid #2c3e50;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .chart-container.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .chart-container h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+        
+        #heatmap {
+            display: grid;
+            grid-template-columns: repeat(31, 1fr);
+            gap: 5px;
+            max-width: 100%;
+        }
+        
+        .heatmap-day {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .heatmap-day:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+        
+        .heat-0 { background: #ecf0f1; color: #7f8c8d; }
+        .heat-1 { background: #a8dadc; }
+        .heat-2 { background: #52b788; }
+        .heat-3 { background: #2d6a4f; }
+        .heat-4 { background: #1b4332; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
 <body>
-
-<header class="main-header">
-    <div class="container nav-container">
-        
-        <a href="#Home" class="logo">
-            <img src="images/images/Behera Logo .gif" class="logo-img" alt="شعار البحيرة" loading="eager">
-            <div class="logo-text">
-                <span class="logo-title" data-translate="logo-title">محافظة البحيرة</span>
-                <span class="logo-subtitle" data-translate="logo-subtitle">معالم وسياحة</span>
-            </div>
-        </a>
-
-        <input type="checkbox" id="nav-toggle" class="nav-checkbox">
-        <label for="nav-toggle" class="nav-toggle" aria-label="فتح القائمة">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
-
-        <nav class="main-nav">
-            <ul>
-                <li><a href="#Home" data-translate="nav-home">الرئيسية</a></li>
-                <li><a href="#About" data-translate="nav-about">عن البحيرة</a></li>
-                <li><a href="#Landmarks" data-translate="nav-landmarks">المعالم</a></li>
-                <li><a href="#Gallery" data-translate="nav-gallery">الصور</a></li>
-                <li><a href="#Contact" data-translate="nav-contact">تواصل معنا</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<section class="hero section" id="Home">
     <div class="container">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 data-translate="hero-title">اكتشف جمال محافظة البحيرة</h1>
-                <p data-translate="hero-description">استكشف التاريخ العريق والطبيعة الخلابة في واحدة من أجمل محافظات مصر. من الأديرة القبطية العريقة إلى المعالم الأثرية الفريدة.</p>
-                <div class="hero-actions">
-                    <a href="#Landmarks" class="btn btn-primary" data-translate="btn-explore">استكشف المعالم</a>
-                    <a href="#About" class="btn btn-outline" data-translate="btn-learn">تعرف على البحيرة</a>
+        <div class="header">
+            <div class="header-box">
+                <h1>HABIT TRACKER</h1>
+            </div>
+            <div class="header-box">
+                <div class="month-year">
+                    <div>
+                        <label>MONTH</label>
+                        <select id="monthInput">
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>YEAR</label>
+                        <select id="yearInput">
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026" selected>2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="images/images/logo.webp" alt="البحيرة" loading="eager">
+            <div class="header-box daily-progress-box">
+                <h2>DAILY PROGRESS</h2>
+                <div class="progress-circle" id="dailyProgress">0%</div>
             </div>
         </div>
-    </div>
-</section>
-
-<section class="about-section section" id="About">
-    <div class="container">
-        <h2 class="section-title" data-translate="about-title">عن محافظة البحيرة</h2>
-        <p class="section-text" data-translate="about-text">محافظة البحيرة هي إحدى محافظات مصر الواقعة في شمال البلاد في دلتا النيل. تتميز بموقعها الاستراتيجي وتاريخها العريق وتنوعها الحضاري الفريد.</p>
         
-        <p class="section-description" data-translate="about-p1">تقع محافظة البحيرة في الجزء الشمالي من جمهورية مصر العربية في دلتا النيل، يحدها شمالاً البحر المتوسط، وشرقاً فرع رشيد، وغرباً محافظة الإسكندرية، وجنوباً محافظة الجيزة.</p>
-        
-        <p class="section-description" data-translate="about-p2">تشتهر المحافظة بتنوعها السياحي الفريد، حيث تجمع بين السياحة الدينية (الأديرة القبطية في وادي النطرون)، والسياحة التاريخية (المعالم الأثرية في رشيد)، والسياحة البيئية (البحيرات الطبيعية والمحميات).</p>
-        
-        <p class="section-description" data-translate="about-p3">رشيد، المدينة التاريخية الشهيرة، تعد جوهرة التاج في محافظة البحيرة بمنازلها الأثرية الفريدة وحجر رشيد الذي كان مفتاح فك رموز الحضارة المصرية القديمة.</p>
-   
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span class="stat-number">15</span>
-                <span class="stat-label" data-translate="stat-landmarks">مدينة رئيسية</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">+20</span>
-                <span class="stat-label" data-translate="stat-history">معلم رئيسي</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number" data-translate="stat-location">غرب الدلتا</span>
-                <span class="stat-label" data-translate="stat-monasteries">موقع جغرافي مميز</span>
+        <div class="habits-section">
+            <div class="habits-header">DAILY HABITS</div>
+            <div class="weeks-container">
+                <div class="habits-column">
+                    <div class="habits-column-header">DAYS</div>
+                    <div class="days-label">31 / 31</div>
+                    <div class="habit-input"><input type="text" placeholder="Habit 1" id="habit0"></div>
+                    <div class="habit-input"><input type="text" placeholder="Habit 2" id="habit1"></div>
+                    <div class="habit-input"><input type="text" placeholder="Habit 3" id="habit2"></div>
+                    <div class="habit-input"><input type="text" placeholder="Habit 4" id="habit3"></div>
+                    <div class="habit-input"><input type="text" placeholder="Habit 5" id="habit4"></div>
+                    <div class="habit-input"><input type="text" placeholder="Habit 6" id="habit5"></div>
+                    <div class="habit-input"><input type="text" placeholder="Habit 7" id="habit6"></div>
+                    <div class="habit-input"><input type="text" placeholder="Habit 8" id="habit7"></div>
+                    <div class="habit-input"><input type="text" placeholder="Habit 9" id="habit8"></div>
+                    <div class="habit-input"><input type="text" placeholder="Habit 10" id="habit9"></div>
+                </div>
+                
+                <div class="week-column week-1">
+                    <div class="week-header">WEEK 1</div>
+                    <div class="days-row">
+                        <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+                    </div>
+                    <div class="date-row">
+                        <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div>
+                    </div>
+                    <div class="checkbox-row" data-habit="0"><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div></div>
+                    <div class="checkbox-row" data-habit="1"><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div></div>
+                    <div class="checkbox-row" data-habit="2"><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div></div>
+                    <div class="checkbox-row" data-habit="3"><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div></div>
+                    <div class="checkbox-row" data-habit="4"><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div></div>
+                    <div class="checkbox-row" data-habit="5"><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div></div>
+                    <div class="checkbox-row" data-habit="6"><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div></div>
+                    <div class="checkbox-row" data-habit="7"><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div></div>
+                    <div class="checkbox-row" data-habit="8"><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div></div>
+                    <div class="checkbox-row" data-habit="9"><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div><div><input type="checkbox" data-week="1"></div></div>
+                </div>
+                
+                <div class="week-column week-2">
+                    <div class="week-header">WEEK 2</div>
+                    <div class="days-row">
+                        <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+                    </div>
+                    <div class="date-row">
+                        <div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div>
+                    </div>
+                    <div class="checkbox-row" data-habit="0"><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div></div>
+                    <div class="checkbox-row" data-habit="1"><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div></div>
+                    <div class="checkbox-row" data-habit="2"><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div></div>
+                    <div class="checkbox-row" data-habit="3"><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div></div>
+                    <div class="checkbox-row" data-habit="4"><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div></div>
+                    <div class="checkbox-row" data-habit="5"><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div></div>
+                    <div class="checkbox-row" data-habit="6"><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div></div>
+                    <div class="checkbox-row" data-habit="7"><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div></div>
+                    <div class="checkbox-row" data-habit="8"><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div></div>
+                    <div class="checkbox-row" data-habit="9"><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div><div><input type="checkbox" data-week="2"></div></div>
+                </div>
+                
+                <div class="week-column week-3">
+                    <div class="week-header">WEEK 3</div>
+                    <div class="days-row">
+                        <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+                    </div>
+                    <div class="date-row">
+                        <div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+                    </div>
+                    <div class="checkbox-row" data-habit="0"><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div></div>
+                    <div class="checkbox-row" data-habit="1"><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div></div>
+                    <div class="checkbox-row" data-habit="2"><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div></div>
+                    <div class="checkbox-row" data-habit="3"><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div></div>
+                    <div class="checkbox-row" data-habit="4"><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div></div>
+                    <div class="checkbox-row" data-habit="5"><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div></div>
+                    <div class="checkbox-row" data-habit="6"><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div></div>
+                    <div class="checkbox-row" data-habit="7"><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div></div>
+                    <div class="checkbox-row" data-habit="8"><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div></div>
+                    <div class="checkbox-row" data-habit="9"><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div><div><input type="checkbox" data-week="3"></div></div>
+                </div>
+                
+                <div class="week-column week-4">
+                    <div class="week-header">WEEK 4</div>
+                    <div class="days-row">
+                        <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+                    </div>
+                    <div class="date-row">
+                        <div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div>
+                    </div>
+                    <div class="checkbox-row" data-habit="0"><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div></div>
+                    <div class="checkbox-row" data-habit="1"><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div></div>
+                    <div class="checkbox-row" data-habit="2"><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div></div>
+                    <div class="checkbox-row" data-habit="3"><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div></div>
+                    <div class="checkbox-row" data-habit="4"><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div></div>
+                    <div class="checkbox-row" data-habit="5"><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div></div>
+                    <div class="checkbox-row" data-habit="6"><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div></div>
+                    <div class="checkbox-row" data-habit="7"><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div></div>
+                    <div class="checkbox-row" data-habit="8"><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div></div>
+                    <div class="checkbox-row" data-habit="9"><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div><div><input type="checkbox" data-week="4"></div></div>
+                </div>
+                
+                <div class="progress-column">
+                    <div class="progress-header">PROGRESS</div>
+                    <div class="days-label">COMPLETED</div>
+                    <div class="progress-row" id="progress0">0 / 31</div>
+                    <div class="progress-row" id="progress1">0 / 31</div>
+                    <div class="progress-row" id="progress2">0 / 31</div>
+                    <div class="progress-row" id="progress3">0 / 31</div>
+                    <div class="progress-row" id="progress4">0 / 31</div>
+                    <div class="progress-row" id="progress5">0 / 31</div>
+                    <div class="progress-row" id="progress6">0 / 31</div>
+                    <div class="progress-row" id="progress7">0 / 31</div>
+                    <div class="progress-row" id="progress8">0 / 31</div>
+                    <div class="progress-row" id="progress9">0 / 31</div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-
-<section class="landmarks-section section" id="Landmarks">
-    <div class="container">
-        <h2 class="section-title" data-translate="landmarks-title">المعالم السياحية</h2>
-        <p class="section-text" data-translate="landmarks-text">استكشف أهم المعالم التاريخية والأثرية والطبيعية في محافظة البحيرة</p>
         
-        <div class="landmarks-grid">
-            <article class="landmark-card">
-                <img src="images/images/dirbishwy.webp" alt="دير الأنبا بيشوي" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-1-city">وادي النطرون</span>
-                    <h3 data-translate="landmark-1-title">دير الأنبا بيشوي</h3>
-                    <p data-translate="landmark-1-desc">أحد أكبر وأعرق الأديرة القبطية الأرثوذكسية في مصر والعالم، تأسس في القرن الرابع الميلادي.</p>
-                    <a href="dirbishwy.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
+        <div class="weekly-section">
+            <div class="weekly-progress">
+                <h3>WEEKLY PROGRESS</h3>
+                <div class="stats">
+                    <div class="stats-row">
+                        <span>Habits Completed</span>
+                        <span id="habitsCompleted">0</span>
+                    </div>
+                    <div class="stats-row">
+                        <span>Habits Incompleted</span>
+                        <span id="habitsIncompleted">0</span>
+                    </div>
+                    <div class="stats-row">
+                        <span>Success Rate</span>
+                        <span id="successRate">0%</span>
+                    </div>
+                    <div class="stats-row">
+                        <span>Best Streak</span>
+                        <span id="bestStreak">0 days</span>
+                    </div>
                 </div>
-            </article>
-
-            <article class="landmark-card">
-                <img src="images/images/lake.webp" alt="بحيرة إدكو" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-2-city">إدكو</span>
-                    <h3 data-translate="landmark-2-title">بحيرة إدكو</h3>
-                    <p data-translate="landmark-2-desc">واحدة من أكبر البحيرات الطبيعية في مصر، تشتهر بثروتها السمكية وكونها موطناً للطيور المهاجرة.</p>
-                    <a href="lake.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
-                </div>
-            </article>
-
-            <article class="landmark-card">
-                <img src="images/images/mahmoudia.webp" alt="ترعة المحمودية" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-3-city">المحمودية</span>
-                    <h3 data-translate="landmark-3-title">ترعة المحمودية</h3>
-                    <p data-translate="landmark-3-desc">مشروع هندسي من عهد محمد علي (1820م) يربط بين نهر النيل والإسكندرية بطول 77 كم.</p>
-                    <a href="mahmoudia.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
-                </div>
-            </article>
-
-            <article class="landmark-card">
-                <img src="images/images/malekfarouq.webp" alt="قصر الملك فاروق" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-4-city">رشيد</span>
-                    <h3 data-translate="landmark-4-title">قصر الملك فاروق</h3>
-                    <p data-translate="landmark-4-desc">قصر ملكي تاريخي يعكس فترة من تاريخ مصر الحديث بتصميمه المعماري الفريد.</p>
-                    <a href="malekfarouq.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
-                </div>
-            </article>
-
-            <article class="landmark-card">
-                <img src="images/images/mathaf.webp" alt="متحف رشيد" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-5-city">رشيد</span>
-                    <h3 data-translate="landmark-5-title">متحف رشيد</h3>
-                    <p data-translate="landmark-5-desc">يضم مقتنيات من الحضارات الفرعونية والرومانية والإسلامية، بما في ذلك نسخة من حجر رشيد.</p>
-                    <a href="mathaf.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
-                </div>
-            </article>
-
-            <article class="landmark-card">
-                <img src="images/images/mosque.webp" alt="مسجد التوبة" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-6-city">دمنهور</span>
-                    <h3 data-translate="landmark-6-title">مسجد التوبة</h3>
-                    <p data-translate="landmark-6-desc">مسجد حديث بتصميم إسلامي مميز، يتسع لآلاف المصلين ويعد مركزاً دينياً واجتماعياً.</p>
-                    <a href="mosque.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
-                </div>
-            </article>
-
-            <article class="landmark-card">
-                <img src="images/images/opera.webp" alt="أوبرا دمنهور" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-7-city">دمنهور</span>
-                    <h3 data-translate="landmark-7-title">أوبرا دمنهور</h3>
-                    <p data-translate="landmark-7-desc">صرح ثقافي يستضيف الحفلات الموسيقية والعروض المسرحية والفعاليات الفنية المتنوعة.</p>
-                    <a href="opera.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
-                </div>
-            </article>
-
-            <article class="landmark-card">
-                <img src="images/images/qaitbay.webp" alt="قلعة قايتباي" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-8-city">رشيد</span>
-                    <h3 data-translate="landmark-8-title">قلعة قايتباي</h3>
-                    <p data-translate="landmark-8-desc">قلعة مملوكية تاريخية بناها السلطان قايتباي عام 1479م، موقع اكتشاف حجر رشيد الشهير.</p>
-                    <a href="qaitbay.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
-                </div>
-            </article>
-
-            <article class="landmark-card">
-                <img src="images/images/qanater.webp" alt="قناطر إدفينا" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-9-city">إدفينا</span>
-                    <h3 data-translate="landmark-9-title">قناطر إدفينا</h3>
-                    <p data-translate="landmark-9-desc">منشأة هندسية على فرع رشيد تنظم تدفق المياه وتلعب دوراً حيوياً في الري والملاحة.</p>
-                    <a href="qanater.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
-                </div>
-            </article>
-
-            <article class="landmark-card">
-                <img src="images/images/Al-Amsili House.webp" alt="منزل الأمصيلي" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-10-city">رشيد</span>
-                    <h3 data-translate="landmark-10-title">منزل الأمصيلي</h3>
-                    <p data-translate="landmark-10-desc">تحفة معمارية من العصر العثماني (1808م)، يتميز بالمشربيات الخشبية ودولاب المناولة الدوار.</p>
-                    <a href="al_amsili_house.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
-                </div>
-            </article>
-
-            <article class="landmark-card">
-                <img src="images/images/rashidrock.webp" alt="حجر رشيد" loading="lazy">
-                <div class="landmark-content">
-                    <span class="landmark-city" data-translate="landmark-11-city">رشيد</span>
-                    <h3 data-translate="landmark-11-title">حجر رشيد</h3>
-                    <p data-translate="landmark-11-desc">أهم اكتشاف أثري في التاريخ، كان مفتاح فك رموز اللغة الهيروغليفية المصرية القديمة.</p>
-                    <a href="rashidrock.html" class="landmark-link" data-translate="landmark-details">التفاصيل ←</a>
-                </div>
-            </article>
-        </div>
-    </div>
-</section>
-
-<section class="gallery section" id="Gallery">
-    <div class="container">
-        <h2 class="section-title" data-translate="gallery-title">معرض الصور</h2>
-        <p class="section-text" data-translate="gallery-text">جولة بصرية في أجمل معالم محافظة البحيرة</p>
-        
-        <div class="gallery-grid">
-            <figure class="gallery-item">
-                <img src="images/images/dirbishwy.webp" alt="دير الأنبا بيشوي" loading="lazy">
-                <figcaption data-translate="landmark-1-title">دير الأنبا بيشوي</figcaption>
-            </figure>
-            <figure class="gallery-item">
-                <img src="images/images/lake.webp" alt="بحيرة إدكو" loading="lazy">
-                <figcaption data-translate="landmark-2-title">بحيرة إدكو</figcaption>
-            </figure>
-            <figure class="gallery-item">
-                <img src="images/images/mahmoudia.webp" alt="ترعة المحمودية" loading="lazy">
-                <figcaption data-translate="landmark-3-title">ترعة المحمودية</figcaption>
-            </figure>
-            <figure class="gallery-item">
-                <img src="images/images/malekfarouq.webp" alt="قصر الملك فاروق" loading="lazy">
-                <figcaption data-translate="landmark-4-title">قصر الملك فاروق</figcaption>
-            </figure>
-            <figure class="gallery-item">
-                <img src="images/images/mathaf.webp" alt="متحف رشيد" loading="lazy">
-                <figcaption data-translate="landmark-5-title">متحف رشيد</figcaption>
-            </figure>
-            <figure class="gallery-item">
-                <img src="images/images/mosque.webp" alt="مسجد التوبة" loading="lazy">
-                <figcaption data-translate="landmark-6-title">مسجد التوبة</figcaption>
-            </figure>
-            <figure class="gallery-item">
-                <img src="images/images/opera.webp" alt="أوبرا دمنهور" loading="lazy">
-                <figcaption data-translate="landmark-7-title">أوبرا دمنهور</figcaption>
-            </figure>
-            <figure class="gallery-item">
-                <img src="images/images/qaitbay.webp" alt="قلعة قايتباي" loading="lazy">
-                <figcaption data-translate="landmark-8-title">قلعة قايتباي</figcaption>
-            </figure>
-            <figure class="gallery-item">
-                <img src="images/images/qanater.webp" alt="قناطر إدفينا" loading="lazy">
-                <figcaption data-translate="landmark-9-title">قناطر إدفينا</figcaption>
-            </figure>
-            <figure class="gallery-item">
-                <img src="images/images/Al-Amsili House.webp" alt="منزل الأمصيلي" loading="lazy">
-                <figcaption data-translate="landmark-10-title">منزل الأمصيلي</figcaption>
-            </figure>
-            <figure class="gallery-item">
-                <img src="images/images/rashidrock.webp" alt="حجر رشيد" loading="lazy">
-                <figcaption data-translate="landmark-11-title">حجر رشيد</figcaption>
-            </figure>
-        </div>
-    </div>
-</section>
-
-<section class="map-section section" id="Map">
-    <div class="container">
-        <h2 class="section-title" data-translate="map-title">موقع محافظة البحيرة</h2>
-        <p class="section-text" data-translate="map-text">تقع في شمال مصر على ساحل البحر المتوسط</p>
-        
-       <div class="map-wrapper">
-                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d878498.3465033525!2d30.2410693!3d30.672428549999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f5df170cf16483%3A0x57d476469e3f3ce5!2z2YXYrdin2YHYuNipINin2YTYqNit2YrYsdip!5e0!3m2!1sar!2seg!4v1765099239132!5m2!1sar!2seg" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-    </div>
-</section>
-
-<section class="contact section" id="Contact">
-    <div class="container">
-        <h2 class="section-title" data-translate="contact-title">تواصل معنا</h2>
-        <p class="section-text" data-translate="contact-text">نسعد بالإجابة على استفساراتكم ومساعدتكم في التخطيط لزيارة البحيرة</p>
-        
-        <div class="contact-grid">
-            <div class="contact-info">
-                <h3 data-translate="contact-info-title">معلومات التواصل</h3>
-                <ul class="contact-list">
-                    <li data-translate="contact-address">📍 العنوان: دمنهور، محافظة البحيرة، مصر</li>
-                    <li data-translate="contact-phone">📞 الهاتف: +20 45 1234567</li>
-                    <li data-translate="contact-email">✉️ البريد الإلكتروني: info@beheira-tourism.gov.eg</li>
-                    <li data-translate="contact-hours">🕒 ساعات العمل: السبت - الخميس، 9 صباحاً - 5 مساءً</li>
-                </ul>
             </div>
             
-            <form class="contact-form">
-                <h3 data-translate="contact-form-title">أرسل رسالة</h3>
-                <div class="form-group">
-                    <label for="name" data-translate="form-name">الاسم</label>
-                    <input type="text" id="name" name="name" required>
+            <div class="week-circles">
+                <div class="week-circle">
+                    <div class="circle circle-1" id="week1Circle">0%</div>
+                    <div class="week-label">WEEK 1</div>
                 </div>
-                <div class="form-group">
-                    <label for="email" data-translate="form-email">البريد الإلكتروني</label>
-                    <input type="email" id="email" name="email" required>
+                <div class="week-circle">
+                    <div class="circle circle-2" id="week2Circle">0%</div>
+                    <div class="week-label">WEEK 2</div>
                 </div>
-                <div class="form-group">
-                    <label for="message" data-translate="form-message">الرسالة</label>
-                    <textarea id="message" name="message" rows="4" required></textarea>
+                <div class="week-circle">
+                    <div class="circle circle-3" id="week3Circle">0%</div>
+                    <div class="week-label">WEEK 3</div>
                 </div>
-                <button type="submit" class="btn btn-primary" data-translate="form-submit">إرسال</button>
-            </form>
+                <div class="week-circle">
+                    <div class="circle circle-4" id="week4Circle">0%</div>
+                    <div class="week-label">WEEK 4</div>
+                </div>
+                <div class="week-circle">
+                    <div class="circle circle-5" id="week5Circle">0%</div>
+                    <div class="week-label">WEEK 5</div>
+                </div>
+            </div>
+            
+            <div class="notes-box">
+                <h3>NOTES</h3>
+                <textarea id="notesArea" placeholder="Write your notes here..."></textarea>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn-print" onclick="window.print()">🖨️ Print Tracker</button>
+            <button class="btn-reset" onclick="resetTracker()">🔄 Reset All</button>
+            <button class="btn-save" onclick="saveTracker()">💾 Save Data</button>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3>📊 Weekly Performance Chart</h3>
+                <canvas id="weeklyChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>📈 Habits Completion Chart</h3>
+                <canvas id="habitsChart"></canvas>
+            </div>
+            <div class="chart-container full-width">
+                <h3>🔥 Daily Activity Heatmap</h3>
+                <div id="heatmap"></div>
+            </div>
         </div>
     </div>
-</section>
-
-<footer class="main-footer">
-    <div class="container">
-        <div class="footer-content">
-            <p>© <span id="year">2024</span> <span data-translate="footer-rights">جميع الحقوق محفوظة</span></p>
-            <p data-translate="footer-team">تصميم وتطوير: NOUR TEAM</p>
-        </div>
-    </div>
-</footer>
-
-<script src="translations.js"></script>
-<script src="script.js"></script>
-
+    
+    <script>
+        let weeklyChart, habitsChart;
+        
+        // Update progress when checkboxes are clicked
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateAllProgress);
+        });
+        
+        function updateAllProgress() {
+            updateHabitProgress();
+            updateWeeklyStats();
+            updateWeekCircles();
+            updateDailyProgress();
+            updateCharts();
+            updateHeatmap();
+        }
+        
+        function updateHabitProgress() {
+            for (let i = 0; i < 10; i++) {
+                const rows = document.querySelectorAll(`.checkbox-row[data-habit="${i}"]`);
+                let completed = 0;
+                
+                rows.forEach(row => {
+                    const checkboxes = row.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(cb => {
+                        if (cb.checked) completed++;
+                    });
+                });
+                
+                document.getElementById(`progress${i}`).textContent = `${completed} / 31`;
+            }
+        }
+        
+        function updateWeeklyStats() {
+            const allCheckboxes = document.querySelectorAll('.checkbox-row input[type="checkbox"]');
+            let completed = 0;
+            
+            allCheckboxes.forEach(cb => {
+                if (cb.checked) completed++;
+            });
+            
+            const total = allCheckboxes.length;
+            const incompleted = total - completed;
+            const successRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            document.getElementById('habitsCompleted').textContent = completed;
+            document.getElementById('habitsIncompleted').textContent = incompleted;
+            document.getElementById('successRate').textContent = successRate + '%';
+            document.getElementById('bestStreak').textContent = calculateBestStreak() + ' days';
+        }
+        
+        function calculateBestStreak() {
+            let maxStreak = 0;
+            let currentStreak = 0;
+            
+            for (let day = 0; day < 31; day++) {
+                let dayComplete = true;
+                for (let habit = 0; habit < 10; habit++) {
+                    const rows = document.querySelectorAll(`.checkbox-row[data-habit="${habit}"]`);
+                    let checkbox = null;
+                    rows.forEach(row => {
+                        const cbs = Array.from(row.querySelectorAll('input[type="checkbox"]'));
+                        if (day < cbs.length) checkbox = cbs[day % 7];
+                    });
+                    if (!checkbox || !checkbox.checked) {
+                        dayComplete = false;
+                        break;
+                    }
+                }
+                
+                if (dayComplete) {
+                    currentStreak++;
+                    maxStreak = Math.max(maxStreak, currentStreak);
+                } else {
+                    currentStreak = 0;
+                }
+            }
+            
+            return maxStreak;
+        }
+        
+        function updateWeekCircles() {
+            for (let week = 1; week <= 5; week++) {
+                const weekCheckboxes = document.querySelectorAll(`input[data-week="${week}"]`);
+                let completed = 0;
+                
+                weekCheckboxes.forEach(cb => {
+                    if (cb.checked) completed++;
+                });
+                
+                const total = weekCheckboxes.length;
+                const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+                
+                const circleEl = document.getElementById(`week${week}Circle`);
+                if (circleEl) {
+                    circleEl.textContent = `${percentage}%`;
+                }
+            }
+        }
+        
+        function updateDailyProgress() {
+            const allCheckboxes = document.querySelectorAll('.checkbox-row input[type="checkbox"]');
+            let completed = 0;
+            
+            allCheckboxes.forEach(cb => {
+                if (cb.checked) completed++;
+            });
+            
+            const total = allCheckboxes.length;
+            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            document.getElementById('dailyProgress').textContent = `${percentage}%`;
+        }
+        
+        function updateCharts() {
+            updateWeeklyChart();
+            updateHabitsChart();
+        }
+        
+        function updateWeeklyChart() {
+            const weekData = [];
+            for (let week = 1; week <= 5; week++) {
+                const weekCheckboxes = document.querySelectorAll(`input[data-week="${week}"]`);
+                let completed = 0;
+                weekCheckboxes.forEach(cb => { if (cb.checked) completed++; });
+                const total = weekCheckboxes.length;
+                const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+                weekData.push(percentage);
+            }
+            
+            const ctx = document.getElementById('weeklyChart').getContext('2d');
+            
+            if (weeklyChart) {
+                weeklyChart.destroy();
+            }
+            
+            weeklyChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+                    datasets: [{
+                        label: 'Completion %',
+                        data: weekData,
+                        backgroundColor: [
+                            'rgba(52, 152, 219, 0.8)',
+                            'rgba(46, 204, 113, 0.8)',
+                            'rgba(233, 30, 99, 0.8)',
+                            'rgba(243, 156, 18, 0.8)',
+                            'rgba(155, 89, 182, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(52, 152, 219, 1)',
+                            'rgba(46, 204, 113, 1)',
+                            'rgba(233, 30, 99, 1)',
+                            'rgba(243, 156, 18, 1)',
+                            'rgba(155, 89, 182, 1)'
+                        ],
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) { return value + '%'; }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+        
+        function updateHabitsChart() {
+            const habitData = [];
+            const habitLabels = [];
+            
+            for (let i = 0; i < 10; i++) {
+                const habitName = document.getElementById(`habit${i}`).value || `Habit ${i + 1}`;
+                habitLabels.push(habitName);
+                
+                const rows = document.querySelectorAll(`.checkbox-row[data-habit="${i}"]`);
+                let completed = 0;
+                rows.forEach(row => {
+                    row.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                        if (cb.checked) completed++;
+                    });
+                });
+                const percentage = Math.round((completed / 31) * 100);
+                habitData.push(percentage);
+            }
+            
+            const ctx = document.getElementById('habitsChart').getContext('2d');
+            
+            if (habitsChart) {
+                habitsChart.destroy();
+            }
+            
+            habitsChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: habitLabels,
+                    datasets: [{
+                        data: habitData,
+                        backgroundColor: [
+                            '#3498db', '#2ecc71', '#e91e63', '#f39c12', '#9b59b6',
+                            '#1abc9c', '#e74c3c', '#34495e', '#16a085', '#d35400'
+                        ],
+                        borderWidth: 3,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                font: { size: 11, weight: 'bold' },
+                                padding: 10
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateHeatmap() {
+            const heatmap = document.getElementById('heatmap');
+            heatmap.innerHTML = '';
+            
+            for (let day = 1; day <= 31; day++) {
+                let completed = 0;
+                let total = 0;
+                
+                for (let habit = 0; habit < 10; habit++) {
+                    const rows = document.querySelectorAll(`.checkbox-row[data-habit="${habit}"]`);
+                    rows.forEach((row, weekIndex) => {
+                        const checkboxes = Array.from(row.querySelectorAll('input[type="checkbox"]'));
+                        const dayIndex = (day - 1) - (weekIndex * 7);
+                        if (dayIndex >= 0 && dayIndex < checkboxes.length) {
+                            total++;
+                            if (checkboxes[dayIndex].checked) completed++;
+                        }
+                    });
+                }
+                
+                const intensity = total > 0 ? Math.floor((completed / total) * 4) : 0;
+                const div = document.createElement('div');
+                div.className = `heatmap-day heat-${intensity}`;
+                div.textContent = day;
+                div.title = `Day ${day}: ${completed}/${total} completed`;
+                heatmap.appendChild(div);
+            }
+        }
+        
+        function resetTracker() {
+            if (confirm('Are you sure you want to reset all data? This cannot be undone!')) {
+                document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                document.querySelectorAll('.habit-input input').forEach(input => input.value = '');
+                document.getElementById('notesArea').value = '';
+                updateAllProgress();
+                alert('✅ Tracker has been reset!');
+            }
+        }
+        
+        function saveTracker() {
+            const data = {
+                month: document.getElementById('monthInput').value,
+                year: document.getElementById('yearInput').value,
+                habits: [],
+                checkboxes: [],
+                notes: document.getElementById('notesArea').value
+            };
+            
+            for (let i = 0; i < 10; i++) {
+                data.habits.push(document.getElementById(`habit${i}`).value);
+            }
+            
+            document.querySelectorAll('input[type="checkbox"]').forEach((cb, index) => {
+                data.checkboxes.push(cb.checked);
+            });
+            
+            const json = JSON.stringify(data);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `habit-tracker-${data.month}-${data.year}.json`;
+            a.click();
+            
+            alert('✅ Data saved successfully!');
+        }
+        
+        // Initialize everything on load
+        window.addEventListener('load', () => {
+            updateAllProgress();
+        });
+         function updateWeeklyChart() {
+            const weekData = [];
+            for (let week = 1; week <= 5; week++) {
+                const weekCheckboxes = document.querySelectorAll(`input[data-week="${week}"]`);
+                let completed = 0;
+                weekCheckboxes.forEach(cb => { if (cb.checked) completed++; });
+                const total = weekCheckboxes.length;
+                const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+                weekData.push(percentage);
+            }
+            
+            const ctx = document.getElementById('weeklyChart').getContext('2d');
+            
+            if (weeklyChart) {
+                weeklyChart.destroy();
+            }
+            
+            weeklyChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+                    datasets: [{
+                        label: 'Completion %',
+                        data: weekData,
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        pointBackgroundColor: 'rgba(52, 152, 219, 1)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(52, 152, 219, 1)',
+                        pointHoverBorderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                callback: function(value) { return value + '%'; },
+                                font: { size: 12, weight: 'bold' }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: { size: 12, weight: 'bold' }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { 
+                            display: false 
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Completion: ' + context.parsed.y + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+    
 </body>
-
-</html>
-
-
-
+</html
